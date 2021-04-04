@@ -1,6 +1,5 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from rest_framework_nested import routers
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
@@ -8,19 +7,13 @@ from .views import CommentView, FollowView, GroupView, PostView
 
 router = DefaultRouter()
 router.register('posts', PostView, basename='posts')
-
 router.register('group', GroupView, basename='group')
-
 router.register('follow', FollowView, basename='follow')
-
-
-comments_router = routers.NestedSimpleRouter(router, r'posts', lookup='posts')
-comments_router.register(r'comments', CommentView, basename='comments')
+router.register(r'posts/(?P<post_id>\d+)/comments', CommentView,
+                basename="comments")
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('', include(comments_router.urls)),
-
 ]
 
 urlpatterns += [

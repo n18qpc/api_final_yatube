@@ -38,12 +38,12 @@ class CommentView(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
-    def list(self, request, posts_pk):
-        comments = Comment.objects.filter(post_id=posts_pk)
+    def list(self, request, post_id):
+        comments = Comment.objects.filter(post_id=post_id)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
-    def create(self, request, posts_pk):
+    def create(self, request, post_id):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(author=request.user)
