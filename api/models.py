@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.translation import gettext_lazy
 
 User = get_user_model()
 
@@ -27,7 +26,7 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        verbose_name=gettext_lazy('Группа'),
+        verbose_name='Группа',
         related_name='group'
     )
 
